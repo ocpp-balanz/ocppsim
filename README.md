@@ -79,24 +79,24 @@ The simulator can be used to automate tests. For example, you could write a scri
 
 ## Supported CP to CS messages
 
-BootNotification
-StatusNotification
-MeterValues
-Authorize
-StartTransaction
-StopTransaction
-TriggerMessage
+- BootNotification
+- StatusNotification
+- MeterValues
+- Authorize
+- StartTransaction
+- StopTransaction
+- TriggerMessage
 
 ## Supported CS to Charger (CP) messages
 
-SetChargingProfile
-ClearChargingProfile
-Reset
-ChangeConfiguration (only actively uses AuthorizationKey during http authentication if set)
-RemoteStartTransaction
-RemoteStopTransaction
-GetConfiguration
-ChangeConfiguration
+- SetChargingProfile
+- ClearChargingProfile
+- Reset
+- ChangeConfiguration (only actively uses AuthorizationKey during http authentication if set)
+- RemoteStartTransaction
+- RemoteStopTransaction
+- GetConfiguration
+- ChangeConfiguration
 
 ## Limitations
 
