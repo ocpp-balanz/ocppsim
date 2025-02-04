@@ -1,0 +1,35 @@
+[project]
+name = "ocppsim"
+version = "0.1.0"
+description = "OCCPSIM - OCCP v1.6 Charge Point Simulator with Websocket Control Interface"
+authors = [
+    {name = "jens-markussen",email = "jens.markussen@gmail.com"}
+]
+license = "MIT"
+repository = "https://github.com/ocpp-balanz/ocppsi"
+readme = "README.md"
+requires-python = ">=3.13"
+
+[tool.poetry.dependencies]
+ocpp = "^2.0.0"
+pydantic = "^1.0.0"
+websockets = "^14.2.0"
+python = "^3.13.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+pytest-asyncio = "^0.25.2"
+black = "^24"
+isort = "^5"
+flake8 = "^7"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.black]
+line-length = 120
+
