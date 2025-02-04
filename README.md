@@ -6,16 +6,16 @@ OCPP v1.6 Charge Point (CP) Simulator used to test OCPP Central Systems (CS).
 
 Clone the repository:
 
-````text
+```text
 git clone https://github.com/ocpp-balanz/ocpp-simulator.git
 cd ocpp-simulator
-``
+```
 
 Install dependencies:
 
-
-
-
+```text
+make install
+```
 
 ## Start
 
