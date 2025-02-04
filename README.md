@@ -46,7 +46,7 @@ Next, connect to the port using e.g. [websocat](https://github.com/vi/websocat) 
 
 Alternatively, use the included test driver `ocppsim_test.py` in interactive mode as follows:
 
-   python ocppsim_test.py --url ws://localhost:321
+    python ocppsim_test.py --url ws://localhost:321
 
 `occpsim_test.py` may also be imported as a module and used in test scripts, possibly connecting to multiple simulators.
 
@@ -73,7 +73,6 @@ Commands           | Description
 `exit`             | Exit the command session
 `shutdown`         | Shutdown the simulator (process will stop)
 
-
 ## Automating Tests
 
 The simulator can be used to automate tests. For example, you could write a script that sends commands and checks the responses. See a `pytest` based example in the `test_ocppsim_example.py` file.
@@ -86,7 +85,7 @@ MeterValues
 Authorize
 StartTransaction
 StopTransaction
-TriggerMessage (some messages)
+TriggerMessage
 
 ## Supported CS to Charger (CP) messages
 
@@ -96,9 +95,11 @@ Reset
 ChangeConfiguration (only actively uses AuthorizationKey during http authentication if set)
 RemoteStartTransaction
 RemoteStopTransaction
+GetConfiguration
+ChangeConfiguration
 
 ## Limitations
 
 - Charging profile evaluation assuming timing "forever"
 - Currently only chargers with a single connector/outlet is supported.
-- Many messages not supported
+- Some messages not supported
