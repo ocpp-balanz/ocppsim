@@ -121,7 +121,7 @@ async def on_connect(websocket):
             elif command == "status":
                 result = (
                     f"Status: {charger.status}, transaction_id: "
-                    f"{charger.transaction_id}, offer: {charger.offer} A, energy "
+                    f"{charger.transaction_id}, offer: {charger.offer:.1f} A, energy "
                     f"(rounded): {round(charger.energy / 100.0) * 100} Wh, delay: "
                     f"{charger._delay}, max_usage: {charger.max_usage}"
                 )
@@ -170,6 +170,9 @@ async def on_connect(websocket):
                 else:
                     # Then stop transaction
                     result = await charger.stop_transaction()
+                # Always reset energy and delay
+                charger.energy = 0.0
+                charger._delay = False
             # --- tag [id_tag]
             elif command == "tag":
                 id_tag: str = msg[1] if len(msg) > 1 else config.get("command", "tag")
@@ -512,6 +515,9 @@ class ChargePoint(cp):
         await self.send_status_notification(status=ChargePointStatus.charging)
         await asyncio.sleep(1)
 
+        charger.energy = 0.0  # Just to be sure. Should not really be necessary
+        charger.last_energy_update = time.time()
+        
         if self.transaction_id is None:
             await self.start_transaction()
 
@@ -695,7 +701,7 @@ class ChargePoint(cp):
 
         if key not in default_keys.keys() and key != "AuthorizationKey":
             return call_result.ChangeConfiguration(status=ConfigurationStatus.not_supported)
-        elif default_keys[key]["readonly"]:
+        elif key != "AuthorizationKey" and default_keys[key]["readonly"]:
             return call_result.ChangeConfiguration(status=ConfigurationStatus.rejected)
         else:
             self.set_config_value(key=key, value=value)
