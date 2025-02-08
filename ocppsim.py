@@ -121,8 +121,8 @@ async def on_connect(websocket):
             elif command == "status":
                 result = (
                     f"Status: {charger.status}, transaction_id: "
-                    f"{charger.transaction_id}, offer: {charger.offer:.1f} A, energy "
-                    f"(rounded): {round(charger.energy / 100.0) * 100} Wh, delay: "
+                    f"{charger.transaction_id}, offer: {charger.offer:.1f} A, energy: "
+                    f"{round(charger.energy)} Wh, delay: "
                     f"{charger._delay}, max_usage: {charger.max_usage}"
                 )
             # --- full/suspend
