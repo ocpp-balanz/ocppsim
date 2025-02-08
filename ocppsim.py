@@ -4,6 +4,7 @@ OCCPSIM - OCCP v1.6 Charge Point Simulator with Websocket Control Interface
 For supported functions, commands, etc. see README.md
 """
 
+import os
 import argparse
 import asyncio
 import base64
@@ -854,7 +855,12 @@ async def main():
             auth_string = charger_id + ":" + auth_key
             headers["Authorization"] = "Basic " + base64.b64encode(bytes(auth_string, "utf-8")).decode()
 
-        url = config.get("server", "url") + charger_id
+        # BALANZ_SERVER_URL environment variable - if set - takes precedence
+        env_url = os.getenv('BALANZ_SERVER_URL', None)
+        if env_url:
+            url = env_url + charger_id
+        else:
+            url = config.get("server", "url") + charger_id
         logging.info(f"Connecting to {url}")
         try:
             ws = await websockets.connect(url, subprotocols=["ocpp1.6"], additional_headers=headers)

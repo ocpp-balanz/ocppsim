@@ -31,3 +31,6 @@ format: .install-poetry
 	poetry run isort $(wildcard *.py)
 	poetry run black --exclude .venv .
 #	poetry run flake8 $(wildcard *.py)
+
+docker:
+	@docker build -t ocppsim .

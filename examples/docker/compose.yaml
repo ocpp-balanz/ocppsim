@@ -1,0 +1,21 @@
+services:
+  ocppsim-hq05:
+    image: ocppsim
+    restart: no
+    ports:
+      - 1234:1234
+    volumes:
+      - ./config:/app/config
+    environment:
+      - TZ=Europe/Copenhagen
+    command: [ "python", "ocppsim.py", "--config", "config/ocppsim.ini", "--id", "TACW222433G580"]
+  ocppsim-hq06:
+    image: ocppsim
+    restart: no
+    ports:
+      - 1235:1234
+    volumes:
+      - ./config:/app/config
+    environment:
+      - TZ=Europe/Copenhagen
+    command: [ "python", "ocppsim.py", "--config", "config/ocppsim.ini", "--id", "TACW224433G669"]
