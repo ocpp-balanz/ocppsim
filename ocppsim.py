@@ -4,13 +4,13 @@ OCCPSIM - OCCP v1.6 Charge Point Simulator with Websocket Control Interface
 For supported functions, commands, etc. see README.md
 """
 
-import os
-import json
 import argparse
 import asyncio
 import base64
 import configparser
+import json
 import logging
+import os
 import random
 import time
 from dataclasses import dataclass
@@ -128,10 +128,20 @@ async def on_connect(websocket):
                     f"{charger._delay}, max_usage: {charger.max_usage}"
                 )
             elif command == "jsonstatus":
-                fields = ["status", "offer", "usage", "max_usage", "last_id_tag", "transaction_id", "energy", "fullafter", "_delay"]
+                fields = [
+                    "status",
+                    "offer",
+                    "usage",
+                    "max_usage",
+                    "last_id_tag",
+                    "transaction_id",
+                    "energy",
+                    "fullafter",
+                    "_delay",
+                ]
                 ch = {}
                 for f in fields:
-                     ch[f] = getattr(charger, f)
+                    ch[f] = getattr(charger, f)
                 result = json.dumps(ch)
             # --- full/suspend
             elif command == "full" or command == "suspend":
@@ -525,7 +535,7 @@ class ChargePoint(cp):
 
         charger.energy = 0.0  # Just to be sure. Should not really be necessary
         charger.last_energy_update = time.time()
-        
+
         if self.transaction_id is None:
             await self.start_transaction()
 
@@ -863,7 +873,7 @@ async def main():
             headers["Authorization"] = "Basic " + base64.b64encode(bytes(auth_string, "utf-8")).decode()
 
         # BALANZ_SERVER_URL environment variable - if set - takes precedence
-        env_url = os.getenv('BALANZ_SERVER_URL', None)
+        env_url = os.getenv("BALANZ_SERVER_URL", None)
         if env_url:
             url = env_url + charger_id
         else:
