@@ -128,7 +128,7 @@ async def on_connect(websocket):
                     f"{charger._delay}, max_usage: {charger.max_usage}"
                 )
             elif command == "jsonstatus":
-                fields = ["status", "offer", "usage", "max_usage", "last_id_tag", "transaction_id", "energy", "fullafter"]
+                fields = ["status", "offer", "usage", "max_usage", "last_id_tag", "transaction_id", "energy", "fullafter", "_delay"]
                 ch = {}
                 for f in fields:
                      ch[f] = getattr(charger, f)
