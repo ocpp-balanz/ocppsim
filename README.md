@@ -58,6 +58,7 @@ Commands           | Description
 ------------------ | ----------------------------------------------------------------
 `wait [sec]`       | Wait some seconds. Default 5 sec
 `status`           | Get the internal status (does not send/receive anything)
+`jsonstatus`       | Receive JSON object with charger attributes. Useful for automation.
 `full`             | Emulate that EV is full/does not want to charge more
 `fullafter [wh]`   | Emulate that EV is full after having received at least [wh]
 `delay`            | Set delayed charing. EV will not start charging

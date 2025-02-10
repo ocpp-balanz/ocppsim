@@ -5,6 +5,7 @@ For supported functions, commands, etc. see README.md
 """
 
 import os
+import json
 import argparse
 import asyncio
 import base64
@@ -126,6 +127,12 @@ async def on_connect(websocket):
                     f"{round(charger.energy)} Wh, delay: "
                     f"{charger._delay}, max_usage: {charger.max_usage}"
                 )
+            elif command == "jsonstatus":
+                fields = ["status", "offer", "usage", "max_usage", "last_id_tag", "transaction_id", "energy", "fullafter"]
+                ch = {}
+                for f in fields:
+                     ch[f] = getattr(charger, f)
+                result = json.dumps(ch)
             # --- full/suspend
             elif command == "full" or command == "suspend":
                 if charger.transaction_id is None:
