@@ -63,6 +63,8 @@ Commands           | Description
 `fullafter [wh]`   | Emulate that EV is full after having received at least [wh]
 `delay`            | Set delayed charing. EV will not start charging
 `nodelay`          | Charging no longer delayed
+`delay_notrans`    | Set delayed charging mode to NOT start a transaction until time is up
+`delay_trans`      | Restore to normal mode, i.e. DO start transaction if offer and delay
 `plugin`           | Cable is plugged into EV
 `unplug`           | Unplug cable/disconnect EV
 `tag [id_tag]`     | RFID tag is scanned. Default tag in config file

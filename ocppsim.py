@@ -170,6 +170,14 @@ async def on_connect(websocket):
                 await charger.update_state_and_send()
                 await asyncio.sleep(1)
                 result = f"Ok. Status now {charger.status}"
+            # --- delay_notrans
+            elif command == "delay_notrans":
+                charger._delay_notrans = True
+                result = f"Ok charger delay_notrans {charger._delay_notrans}"
+            # --- delay_notrans
+            elif command == "delay_trans":
+                charger._delay_notrans = False
+                result = f"Ok charger delay_notrans {charger._delay_notrans}"
             # --- plugin
             elif command == "plugin":
                 if charger.status == ChargePointStatus.available:
@@ -304,6 +312,7 @@ class ChargePoint(cp):
 
         # Fields used by command/simulator
         self._delay = False  # delayed charging
+        self._delay_notrans = False
 
     def update_energy(self) -> None:
         """Update energy usage"""
@@ -527,9 +536,15 @@ class ChargePoint(cp):
 
     async def start_charging(self) -> None:
         """Meta function to start charging"""
+        if charger._delay and charger._delay_notrans:
+            await self.send_status_notification(status=ChargePointStatus.suspended_ev)
+            await asyncio.sleep(1)
+            return # and nothing else!
+
         # If coming form SuspendedEVSE, go via SuspendedEV
         if self.status == ChargePointStatus.suspended_evse:
             await self.send_status_notification(status=ChargePointStatus.suspended_ev)
+
         await self.send_status_notification(status=ChargePointStatus.charging)
         await asyncio.sleep(1)
 
@@ -553,7 +568,7 @@ class ChargePoint(cp):
                 await self.start_charging()
             else:
                 # Start transaction, even if charging cannot start
-                if self.transaction_id is None:
+                if self.transaction_id is None and not charger._delay_notrans:
                     await self.start_transaction()
 
                 # Goto SuspendedEVSE via SuspendedEV
