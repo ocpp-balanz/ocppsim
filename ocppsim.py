@@ -194,8 +194,11 @@ async def on_connect(websocket):
                         await charger.send_status_notification(status=ChargePointStatus.available)
                         result = "Ok, status change to available"
                 else:
-                    # Then stop transaction
-                    result = await charger.stop_transaction()
+                    # Then stop transaction, but only if it was started
+                    if charger.transaction_id is not None:
+                        result = await charger.stop_transaction()
+                    else:
+                        result = "Ok, nothing to do as transaction never started"
                 # Always reset energy and delay
                 charger.energy = 0.0
                 charger._delay = False
